@@ -7,6 +7,10 @@
 
 public final class Context {
     
+    public typealias Stream = String
+    public typealias Element = Stream.Element
+    public typealias Index = Stream.Index
+    
     public let stream: Stream
     
     public init(stream: Stream) {
@@ -56,13 +60,4 @@ public extension Context {
     func error(with message: Stream) -> Error {
         .init(stream: stream, position: _cursor, message: message)
     }
-}
-
-// MARK: - Types
-
-public extension Context {
-    
-    typealias Stream = String
-    typealias Element = Stream.Element
-    typealias Index = Stream.Index
 }

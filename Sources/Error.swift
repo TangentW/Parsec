@@ -25,22 +25,22 @@ public extension Error {
     }
 }
 
-extension Error: CustomStringConvertible {
-    
-    public var description: String {
-        let (line, column) = lineAndColumn
-        return "[\(line):\(column)]\(message)"
-    }
-    
-    public var lineAndColumn: (line: Int, column: Int) {
-        stream.reduce(into: (line: 1, column: 1)) {
-            if $1.isNewline {
-                $0 = ($0.line + 1, 1)
-            } else if $1 == "\t" {
-                $0.column = $0.column + 8 - ($0.column - 1) % 8
-            } else {
-                $0.column += 1
-            }
-        }
-    }
-}
+//extension Error: CustomStringConvertible {
+//    
+//    public var description: String {
+//        let (line, column) = lineAndColumn
+//        return "[\(line):\(column)]\(message)"
+//    }
+//    
+//    public var lineAndColumn: (line: Int, column: Int) {
+//        stream.reduce(into: (line: 1, column: 1)) {
+//            if $1.isNewline {
+//                $0 = ($0.line + 1, 1)
+//            } else if $1 == "\t" {
+//                $0.column = $0.column + 8 - ($0.column - 1) % 8
+//            } else {
+//                $0.column += 1
+//            }
+//        }
+//    }
+//}

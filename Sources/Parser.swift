@@ -18,14 +18,7 @@ public struct Parser<Value> {
 
 public extension Parser {
     
-    func callAsFunction(_ context: Context) -> Result {
-        parse(context)
-    }
-}
-
-public extension Parser {
-    
     func parse(_ stream: Context.Stream) -> Result {
-        self(.init(stream: stream))
+        parse(.init(stream: stream))
     }
 }

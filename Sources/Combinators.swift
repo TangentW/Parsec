@@ -23,9 +23,9 @@ public extension Parser {
     
     func flatMap<O>(_ transform: @escaping (Value) -> Parser<O>) -> Parser<O> {
         .init {
-            switch self($0) {
+            switch self.parse($0) {
             case .success(let value):
-                return transform(value)($0)
+                return transform(value).parse($0)
             case .failure(let error):
                 return .failure(error)
             }
@@ -34,11 +34,11 @@ public extension Parser {
     
     func flatMapError(_ transform: @escaping (Error) -> Parser<Value>) -> Parser<Value> {
         .init {
-            switch self($0) {
+            switch self.parse($0) {
             case .success(let value):
                 return .success(value)
             case .failure(let error):
-                return transform(error)($0)
+                return transform(error).parse($0)
             }
         }
     }
@@ -121,7 +121,7 @@ public extension Parser {
         flatMap { first in
             .init {
                 var result = [first]
-                while case .success(let value) = self($0) {
+                while case .success(let value) = self.parse($0) {
                     result.append(value)
                 }
                 return .success(result)

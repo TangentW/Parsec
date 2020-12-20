@@ -2,10 +2,23 @@ import XCTest
 @testable import Parsec
 
 final class ParsecTests: XCTestCase {
+    
     func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct
-        // results.
+        
+        let inputOne = "hello world!"
+        let inputTwo = ""
+
+        let inputOneResultOfElement = element.parse(inputOne)
+        let inputTwoResultOfElement = element.parse(inputTwo)
+
+        let inputOneResultOfEndOfStream = endOfStream.parse(inputOne)
+        let inputTwoResultOfEndOfStream = endOfStream.parse(inputTwo)
+        
+        print("inputOneResultOfElement: \(inputOneResultOfElement)")
+        print("inputTwoResultOfElement: \(inputTwoResultOfElement)")
+        print("")
+        print("inputOneResultOfEndOfStream: \(inputOneResultOfEndOfStream)")
+        print("inputTwoResultOfEndOfStream: \(inputTwoResultOfEndOfStream)")
     }
 
     static var allTests = [
