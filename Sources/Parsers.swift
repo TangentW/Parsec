@@ -28,3 +28,14 @@ public func char(_ char: Character) -> Parser<Character> {
 public let whitespace = element.filter("expecting whitespace") { $0.isWhitespace }
 
 public let newline = element.filter("expecting newline") { $0.isNewline }
+
+public func string(_ string: String) -> Parser<String> {
+    .init {
+        for element in string {
+            if case .failure(let error) = char(element).parse($0) {
+                return .failure(error)
+            }
+        }
+        return .success(string)
+    }
+}

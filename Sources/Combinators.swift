@@ -44,10 +44,6 @@ public extension Parser {
     }
 }
 
-public func >>- <L, R>(lhs: Parser<L>, rhs: @escaping (L) -> Parser<R>) -> Parser<R> {
-    lhs.flatMap(rhs)
-}
-
 // MARK: - Functor
 
 public extension Parser {
@@ -63,10 +59,6 @@ public extension Parser {
             .error(transform($0))
         }
     }
-}
-
-public func <^> <L, R>(lhs: @escaping (L) -> R, rhs: Parser<L>) -> Parser<R> {
-    rhs.map(lhs)
 }
 
 // MARK: - Applicative
