@@ -4,21 +4,27 @@ import XCTest
 final class ParsecTests: XCTestCase {
     
     func testExample() {
-        
-        let inputOne = "hello world!"
-        let inputTwo = ""
+        let arrow = string("=>").between(space.many, space.many)
 
-        let inputOneResultOfElement = element.parse(inputOne)
-        let inputTwoResultOfElement = element.parse(inputTwo)
+        typealias Entry = (key: String, value: String)
 
-        let inputOneResultOfEndOfStream = endOfStream.parse(inputOne)
-        let inputTwoResultOfEndOfStream = endOfStream.parse(inputTwo)
+        let entry: Parser<Entry> = stringLiteral.flatMap { key in
+            (arrow *> stringLiteral).map { value in
+                (key, value)
+            }
+        }
+
+        let entries = (entry <* (newline <|> endOfStream)).some
+
         
-        print("inputOneResultOfElement: \(inputOneResultOfElement)")
-        print("inputTwoResultOfElement: \(inputTwoResultOfElement)")
-        print("")
-        print("inputOneResultOfEndOfStream: \(inputOneResultOfEndOfStream)")
-        print("inputTwoResultOfEndOfStream: \(inputTwoResultOfEndOfStream)")
+        let string = """
+        "name" => "Tangent"
+        "city" => "深圳"
+        "introduction" => "iOS开发者"
+        """
+        let result = entries.parse(string)
+        
+        print(result)
     }
 
     static var allTests = [

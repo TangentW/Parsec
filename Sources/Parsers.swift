@@ -25,9 +25,9 @@ public func char(_ char: Character) -> Parser<Character> {
     element.equal(to: char)
 }
 
-public let whitespace = element.filter("expecting whitespace") { $0.isWhitespace }
-
-public let newline = element.filter("expecting newline") { $0.isNewline }
+public func notChar(_ char: Character) -> Parser<Character> {
+    element.notEqual(to: char)
+}
 
 public func string(_ string: String) -> Parser<String> {
     .init {
@@ -39,3 +39,15 @@ public func string(_ string: String) -> Parser<String> {
         return .success(string)
     }
 }
+
+public let charLiteral = element.between(char("'"), char("'"))
+
+public let stringLiteral = notChar("\"").many
+    .map { String($0) }
+    .between(char("\""), char("\""))
+
+public let space = element.filter("expecting whitespace") { $0 == " " }
+    .map { _ in }
+
+public let newline = element.filter("expecting newline") { $0.isNewline }
+    .map { _ in }
